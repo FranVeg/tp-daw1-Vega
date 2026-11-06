@@ -1,0 +1,55 @@
+### Archivo de pruebas · reemplazá las rutas por las de tu enunciado
+### En IntelliJ: abrí este archivo y tocá el ▶ verde de cada petición.
+
+@base = http://localhost:8080/api
+
+### 1. Crear un Evento (Extra: Preventa aplica si faltan > 7 días)
+POST {{base}}/eventos
+Content-Type: application/json
+
+{
+  "nombre": "Concierto Rock",
+  "fecha": "2026-11-20T21:00:00",
+  "capacidad": 100,
+  "precio": 5000.0
+}
+
+### 2. Crear un Asistente
+POST {{base}}/asistentes
+Content-Type: application/json
+
+{
+  "nombre": "Franco Vega",
+  "email": "franco@email.com"
+}
+
+### 3. Crear Entrada (Nace RESERVADA)
+POST {{base}}/entradas
+Content-Type: application/json
+
+{
+  "evento": {"id": 1},
+  "asistente": {"id": 1}
+}
+
+### 4. Pagar Entrada (Extra: Calcula importe con o sin descuento)
+PATCH {{base}}/entradas/1/estado
+Content-Type: application/json
+
+{
+  "estado": "PAGADA"
+}
+
+### 5. Consultar Ocupación del Evento (Extra)
+GET {{base}}/eventos/1/ocupacion
+
+### 6. Validar Código en Puerta (Extra - Reemplazar con el UUID generado)
+POST {{base}}/entradas/validar
+Content-Type: application/json
+
+{
+  "codigo": "REEMPLAZAR_AQUI_CON_EL_UUID_QUE_DEVUELVE_EL_PASO_3"
+}
+
+### 7. Intentar borrar evento con entradas (Regla 3: debe dar 409)
+DELETE {{base}}/eventos/1
